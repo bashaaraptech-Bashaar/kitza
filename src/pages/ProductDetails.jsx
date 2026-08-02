@@ -3,6 +3,7 @@ import products from "../data/products";
 import ProductCard from "../components/ProductCard";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Review from "../components/Reviews";
@@ -12,6 +13,7 @@ function ProductDetails() {
     const [activeTab, setActiveTab] = useState("description");
     const [size, setSize] = useState("M");
     const [quantity, setQuantity] = useState(1);
+    const navigate = useNavigate();
     const product = products.find(
         (item) => item.id === Number(id)
     );
@@ -175,21 +177,30 @@ function ProductDetails() {
                         </div>
                         <div className="flex gap-5 mt-12">
 
-                            <button
-                                className="flex-1 bg-[#4CAF50] text-white py-4 rounded-full font-bold text-lg hover:bg-black duration-300"
-                            >
+                           <button
+  onClick={() => {
+    localStorage.setItem("kitzaCart", JSON.stringify(product));
+    navigate("/cart");
+  }}
+  className="bg-black text-white px-8 py-3 rounded-full font-semibold hover:bg-gray-800 transition"
+>
+  Add to Cart
+</button>
 
-                                Add To Cart
+                           
+       <button
+  onClick={() => {
+    localStorage.setItem(
+      "kitzaCheckout",
+      JSON.stringify(product)
+    );
 
-                            </button>
-
-                            <button
-                                className="flex-1 border-2 border-black py-4 rounded-full font-bold text-lg hover:bg-black hover:text-white duration-300"
-                            >
-
-                                Buy Now
-
-                            </button>
+    navigate("/checkout");
+  }}
+  className="w-full bg-[#4CAF50] text-white py-3 rounded-full font-semibold"
+>
+  Buy Now
+</button>
 
                         </div>
                         {/* Tabs */}

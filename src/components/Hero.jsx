@@ -3,8 +3,8 @@ import { FaTshirt, FaFire, FaShieldAlt } from "react-icons/fa";
 import { FiPackage } from "react-icons/fi";
 
 function Hero() {
-  return (
-    <section className="bg-white overflow-hidden">
+return(
+<section>
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid lg:grid-cols-2 items-center min-h-[700px] gap-10">
 
@@ -64,7 +64,7 @@ function Hero() {
           </div>
 
           {/* RIGHT */}
-          <div className="relative flex justify-center items-center order-1 lg:order-2 min-h-full">
+          <div className="relative flex justify-center items-center order-1 lg:order-2 min-h-full overflow-visible">
 
             <div className="absolute top-10 left-6 text-5xl text-black">
               ✦
@@ -77,7 +77,7 @@ function Hero() {
             <img
               src={HeroImage}
               alt="Football Jerseys"
-              className="w-full max-w-2xl object-contain"
+              className="w-full max-w-4xl h-auto object-contain scale-110"
             />
 
           </div>
@@ -85,7 +85,8 @@ function Hero() {
         </div>
       </div>
     </section>
-  );
+
+)
 }
 
 export default Hero;
