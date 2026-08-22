@@ -1,289 +1,904 @@
+import Navbar from "../components/Navbar";
+import Letter from "../components/NewsLetter";
+import Footer from "../components/Footer";
+
+import { productImages } from "../data/products";
+
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import {
+  FiMinus,
+  FiPlus,
+  FiTrash2,
+} from "react-icons/fi";
+
 
 function Checkout() {
-  const [product, setProduct] = useState(null);
-  const [quantity, setQuantity] = useState(1);
+
+  const [cart, setCart] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(null);
+  const [placingOrder, setPlacingOrder] = useState(false);
+
+  const [customer, setCustomer] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    address: "",
+    city: "",
+    postalCode: "",
+  });
+
+  const navigate = useNavigate();
+
+
+  // ===============================
+  // GET CART FROM BACKEND
+  // ===============================
+
+  const fetchCart = async () => {
+
+    const token =
+      localStorage.getItem("kitzaToken");
+
+    if (!token) {
+      setCart({ items: [] });
+      setLoading(false);
+      return;
+    }
+
+    try {
+
+      setLoading(true);
+
+      const response = await fetch(
+        "http://localhost:3000/cart",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message ||
+            "Failed to load cart"
+        );
+      }
+
+      setCart(data);
+
+    } catch (error) {
+
+      console.error(
+        "Get checkout cart error:",
+        error
+      );
+
+      setCart({ items: [] });
+
+    } finally {
+
+      setLoading(false);
+
+    }
+  };
+
+
+  // ===============================
+  // FETCH CART
+  // ===============================
 
   useEffect(() => {
-    const savedProduct = localStorage.getItem("kitzaCart");
-
-    if (savedProduct) {
-      setProduct(JSON.parse(savedProduct));
-    }
+    fetchCart();
   }, []);
 
-  const increase = () => {
-    setQuantity((prev) => prev + 1);
+
+  // ===============================
+  // UPDATE CUSTOMER
+  // ===============================
+
+  const handleChange = (e) => {
+
+    const { name, value } = e.target;
+
+    setCustomer((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+  };
+  const placeOrder = async () => {
+  const token = localStorage.getItem("kitzaToken");
+
+  if (!token) {
+    alert("Please login before placing your order.");
+    return;
+  }
+
+  // ===============================
+  // VALIDATE CUSTOMER INFORMATION
+  // ===============================
+
+  if (
+    !customer.fullName ||
+    !customer.email ||
+    !customer.phone ||
+    !customer.address ||
+    !customer.city ||
+    !customer.postalCode
+  ) {
+    alert("Please complete all customer information.");
+    return;
+  }
+
+  try {
+    setPlacingOrder(true);
+
+    const response = await fetch(
+      "http://localhost:3000/orders",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+
+        body: JSON.stringify({
+          fullName: customer.fullName,
+          email: customer.email,
+          phone: customer.phone,
+          address: customer.address,
+          city: customer.city,
+          postalCode: customer.postalCode,
+          paymentMethod: "Cash on Delivery",
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.message || "Failed to place order."
+      );
+    }
+
+    console.log("Order created:", data.order);
+
+    // ===============================
+    // GO TO SUCCESS PAGE
+    // ===============================
+
+    navigate("/order-success", {
+      state: {
+        order: data.order,
+      },
+    });
+
+  } catch (error) {
+    console.error("Place order error:", error);
+
+    alert(
+      error.message ||
+        "Something went wrong while placing your order."
+    );
+
+  } finally {
+    setPlacingOrder(false);
+  }
+};
+
+
+  // ===============================
+  // UPDATE QUANTITY
+  // ===============================
+
+  const updateQuantity = async (
+    itemId,
+    newQuantity
+  ) => {
+
+    if (newQuantity < 1) return;
+
+    const token =
+      localStorage.getItem("kitzaToken");
+
+    if (!token) return;
+
+    try {
+
+      setUpdating(itemId);
+
+      const response = await fetch(
+        `http://localhost:3000/cart/${itemId}`,
+        {
+          method: "PATCH",
+
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+
+          body: JSON.stringify({
+            quantity: newQuantity,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message ||
+            "Failed to update quantity"
+        );
+      }
+
+      setCart(data.cart);
+
+    } catch (error) {
+
+      console.error(
+        "Update quantity error:",
+        error
+      );
+
+    } finally {
+
+      setUpdating(null);
+
+    }
   };
 
-  const decrease = () => {
-    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+
+  // ===============================
+  // REMOVE ITEM
+  // ===============================
+
+  const removeItem = async (itemId) => {
+
+    const token =
+      localStorage.getItem("kitzaToken");
+
+    if (!token) return;
+
+    try {
+
+      setUpdating(itemId);
+
+      const response = await fetch(
+        `http://localhost:3000/cart/${itemId}`,
+        {
+          method: "DELETE",
+
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message ||
+            "Failed to remove item"
+        );
+      }
+
+      setCart(data.cart);
+
+    } catch (error) {
+
+      console.error(
+        "Remove item error:",
+        error
+      );
+
+    } finally {
+
+      setUpdating(null);
+
+    }
   };
 
-  if (!product) {
+
+  // ===============================
+  // CART DATA
+  // ===============================
+
+  const items = cart?.items || [];
+
+
+  // ===============================
+  // CALCULATE SUBTOTAL
+  // ===============================
+
+  const subtotal = items.reduce(
+    (total, item) => {
+
+      const price =
+        Number(item.price) || 0;
+
+      const quantity =
+        Number(item.quantity) || 1;
+
+      return (
+        total +
+        price * quantity
+      );
+
+    },
+    0
+  );
+
+
+  // ===============================
+  // DELIVERY
+  // ===============================
+
+  const delivery =
+    items.length > 0 ? 300 : 0;
+
+
+  // ===============================
+  // TOTAL
+  // ===============================
+
+  const total =
+    subtotal + delivery;
+
+
+  // ===============================
+  // LOADING
+  // ===============================
+
+  if (loading) {
+
     return (
-      <section className="min-h-[70vh] flex flex-col items-center justify-center px-6">
-        <h1 className="text-3xl font-bold text-slate-900">
-          NO PRODUCT SELECTED
-        </h1>
+      <>
+        <Navbar />
 
-        <Link
-          to="/shop"
-          className="mt-6 bg-slate-900 text-white px-8 py-3 rounded-full"
-        >
-          Continue Shopping
-        </Link>
-      </section>
+        <section className="min-h-[60vh] flex items-center justify-center">
+
+          <p className="text-gray-500">
+            Loading checkout...
+          </p>
+
+        </section>
+
+        <Letter />
+        <Footer />
+      </>
     );
   }
 
-  const price = Number(product.price);
-  const subtotal = price * quantity;
-  const delivery = 200;
-  const total = subtotal + delivery;
+
+  // ===============================
+  // EMPTY CART
+  // ===============================
+
+  if (items.length === 0) {
+
+    return (
+      <>
+        <Navbar />
+
+        <section className="min-h-[60vh] flex flex-col items-center justify-center px-6 text-center">
+
+          <h1 className="text-3xl md:text-4xl font-black text-slate-900">
+            YOUR CART IS EMPTY
+          </h1>
+
+          <p className="text-gray-500 mt-3">
+            Add some jerseys before checking out.
+          </p>
+
+          <Link
+            to="/shop"
+            className="mt-6 bg-slate-900 text-white px-8 py-3 rounded-full font-semibold hover:bg-[#4CAF50] transition"
+          >
+            Continue Shopping
+          </Link>
+
+        </section>
+
+        <Letter />
+        <Footer />
+      </>
+    );
+  }
+
+
+  // ===============================
+  // CHECKOUT PAGE
+  // ===============================
 
   return (
-    <section className="bg-white min-h-screen py-12 md:py-20 px-5 md:px-10 lg:px-20">
+    <>
+      <Navbar />
 
-      <div className="max-w-6xl mx-auto">
+      <section className="bg-white py-12 md:py-20 px-5 md:px-10 lg:px-20">
 
-        {/* Heading */}
-        <h1 className="text-3xl md:text-4xl font-black text-slate-900">
-          CHECKOUT
-        </h1>
+        <div className="max-w-6xl mx-auto">
 
-        <p className="text-gray-500 mt-2">
-          Complete your order below.
-        </p>
+          {/* PAGE TITLE */}
 
-        <div className="grid lg:grid-cols-3 gap-8 mt-10">
+          <h1 className="text-3xl md:text-4xl font-black text-slate-900">
+            CHECKOUT
+          </h1>
 
-          {/* LEFT SIDE */}
-          <div className="lg:col-span-2 space-y-8">
+          <p className="text-gray-500 mt-2">
+            Complete your information to place your order.
+          </p>
 
-            {/* Product */}
-            <div className="border rounded-2xl p-5 md:p-7">
 
-              <h2 className="text-xl font-bold mb-6">
-                Your Product
-              </h2>
+          <div className="grid lg:grid-cols-3 gap-8 mt-10">
 
-              <div className="flex gap-5">
 
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-28 h-32 md:w-36 md:h-40 object-cover rounded-xl bg-gray-100"
-                />
+           {/* =================================================
+    LEFT SIDE
+================================================= */}
 
-                <div className="flex-1">
+<div className="lg:col-span-2 space-y-8">
 
-                  <h3 className="text-lg md:text-xl font-bold text-slate-900">
-                    {product.title}
-                  </h3>
+  {/* ===============================
+      CUSTOMER INFORMATION
+  =============================== */}
 
-                  <p className="text-gray-500 mt-1">
-                    {product.category}
-                  </p>
+  <div className="border rounded-2xl p-6 md:p-8">
 
-                  <p className="text-[#4CAF50] font-bold text-lg mt-4">
-                    Rs {price.toLocaleString()}
-                  </p>
+    <h2 className="text-xl font-bold text-slate-900">
+      Customer Information
+    </h2>
 
-                  {/* Quantity */}
-                  <div className="flex items-center gap-3 mt-5">
+    <div className="grid md:grid-cols-2 gap-5 mt-6">
 
-                    <button
-                      onClick={decrease}
-                      className="w-8 h-8 rounded-full border hover:bg-gray-100"
-                    >
-                      −
-                    </button>
+      {/* FULL NAME */}
+      <div className="md:col-span-2">
+        <label className="block text-sm font-medium text-slate-700 mb-2">
+          Full Name
+        </label>
 
-                    <span className="font-medium">
-                      {quantity}
-                    </span>
+        <input
+          type="text"
+          name="fullName"
+          value={customer.fullName}
+          onChange={handleChange}
+          placeholder="Enter your full name"
+          className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#4CAF50]"
+        />
+      </div>
 
-                    <button
-                      onClick={increase}
-                      className="w-8 h-8 rounded-full border hover:bg-gray-100"
-                    >
-                      +
-                    </button>
+      {/* EMAIL */}
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-2">
+          Email
+        </label>
 
-                  </div>
+        <input
+          type="email"
+          name="email"
+          value={customer.email}
+          onChange={handleChange}
+          placeholder="Enter your email"
+          className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#4CAF50]"
+        />
+      </div>
 
-                </div>
+      {/* PHONE */}
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-2">
+          Phone
+        </label>
 
-              </div>
+        <input
+          type="tel"
+          name="phone"
+          value={customer.phone}
+          onChange={handleChange}
+          placeholder="03XX XXXXXXX"
+          className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#4CAF50]"
+        />
+      </div>
 
-            </div>
+      {/* ADDRESS */}
+      <div className="md:col-span-2">
+        <label className="block text-sm font-medium text-slate-700 mb-2">
+          Address
+        </label>
 
-            {/* Customer Information */}
-            <div className="border rounded-2xl p-5 md:p-7">
+        <textarea
+          name="address"
+          value={customer.address}
+          onChange={handleChange}
+          placeholder="Enter your complete delivery address"
+          rows="3"
+          className="w-full border rounded-xl px-4 py-3 outline-none resize-none focus:ring-2 focus:ring-[#4CAF50]"
+        />
+      </div>
 
-              <h2 className="text-xl font-bold mb-6">
-                Customer Information
-              </h2>
+      {/* CITY */}
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-2">
+          City
+        </label>
 
-              <div className="grid md:grid-cols-2 gap-5">
+        <input
+          type="text"
+          name="city"
+          value={customer.city}
+          onChange={handleChange}
+          placeholder="Enter your city"
+          className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#4CAF50]"
+        />
+      </div>
 
-                <input
-                  type="text"
-                  placeholder="First Name"
-                  className="w-full border rounded-lg px-4 py-3 outline-none focus:border-slate-900"
-                />
+      {/* POSTAL CODE */}
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-2">
+          Postal Code
+        </label>
 
-                <input
-                  type="text"
-                  placeholder="Last Name"
-                  className="w-full border rounded-lg px-4 py-3 outline-none focus:border-slate-900"
-                />
+        <input
+          type="text"
+          name="postalCode"
+          value={customer.postalCode}
+          onChange={handleChange}
+          placeholder="Postal code"
+          className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#4CAF50]"
+        />
+      </div>
 
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="w-full border rounded-lg px-4 py-3 outline-none focus:border-slate-900"
-                />
+    </div>
+  </div>
 
-                <input
-                  type="tel"
-                  placeholder="Phone Number"
-                  className="w-full border rounded-lg px-4 py-3 outline-none focus:border-slate-900"
-                />
 
-              </div>
+  {/* ===============================
+      PAYMENT METHOD
+  =============================== */}
 
-              <textarea
-                placeholder="Delivery Address"
-                rows="4"
-                className="w-full border rounded-lg px-4 py-3 mt-5 outline-none focus:border-slate-900 resize-none"
-              />
+  <div className="border rounded-2xl p-6 md:p-8">
 
-            </div>
+    <h2 className="text-xl font-bold text-slate-900">
+      Payment Method
+    </h2>
 
-            {/* Payment */}
-            <div className="border rounded-2xl p-5 md:p-7">
+    <div className="mt-5 border-2 border-[#4CAF50] rounded-xl p-4 bg-green-50">
 
-              <h2 className="text-xl font-bold mb-5">
-                Payment Method
-              </h2>
+      <div className="flex items-center gap-3">
 
-              <label className="flex items-center gap-3 border rounded-lg p-4 cursor-pointer">
-                <input
-                  type="radio"
-                  name="payment"
-                  defaultChecked
-                />
+        <input
+          type="radio"
+          checked
+          readOnly
+          className="w-4 h-4 accent-[#4CAF50]"
+        />
 
-                <div>
-                  <p className="font-semibold">
-                    Cash on Delivery
-                  </p>
+        <div>
 
-                  <p className="text-sm text-gray-500">
-                    Pay when your order arrives.
-                  </p>
-                </div>
+          <p className="font-semibold text-slate-900">
+            Cash on Delivery
+          </p>
 
-              </label>
-
-            </div>
-
-          </div>
-
-          {/* RIGHT SIDE - SUMMARY */}
-          <div className="border rounded-2xl p-6 h-fit lg:sticky lg:top-24">
-
-            <h2 className="text-xl font-bold">
-              Order Summary
-            </h2>
-
-            {/* Small product preview */}
-            <div className="flex gap-3 mt-6 pb-5 border-b">
-
-              <img
-                src={product.image}
-                alt={product.title}
-                className="w-16 h-16 rounded-lg object-cover"
-              />
-
-              <div className="flex-1">
-
-                <h3 className="font-semibold text-sm">
-                  {product.title}
-                </h3>
-
-                <p className="text-gray-500 text-sm">
-                  Qty: {quantity}
-                </p>
-
-              </div>
-
-              <p className="font-semibold">
-                Rs {subtotal.toLocaleString()}
-              </p>
-
-            </div>
-
-            <div className="mt-6 space-y-4">
-
-              <div className="flex justify-between">
-                <span className="text-gray-500">
-                  Subtotal
-                </span>
-
-                <span className="font-medium">
-                  Rs {subtotal.toLocaleString()}
-                </span>
-              </div>
-
-              <div className="flex justify-between">
-                <span className="text-gray-500">
-                  Delivery
-                </span>
-
-                <span className="font-medium">
-                  Rs {delivery.toLocaleString()}
-                </span>
-              </div>
-
-              <div className="border-t pt-4 flex justify-between text-lg">
-
-                <span className="font-bold">
-                  Total
-                </span>
-
-                <span className="font-bold text-[#4CAF50]">
-                  Rs {total.toLocaleString()}
-                </span>
-
-              </div>
-
-            </div>
-
-            <button
-              onClick={() => alert("Order placed successfully!")}
-              className="w-full mt-7 bg-slate-900 text-white py-3 rounded-full font-semibold hover:bg-[#4CAF50] transition"
-            >
-              Place Order
-            </button>
-
-            <Link
-              to="/cart"
-              className="block text-center mt-4 text-sm text-gray-500 hover:text-slate-900"
-            >
-              ← Back to Cart
-            </Link>
-
-          </div>
+          <p className="text-sm text-gray-500 mt-1">
+            Pay when your order arrives.
+          </p>
 
         </div>
 
       </div>
 
-    </section>
+    </div>
+
+  </div>
+
+</div>
+            {/* =================================================
+    RIGHT SIDE
+================================================= */}
+
+<div className="space-y-8 lg:sticky lg:top-24 h-fit">
+
+  {/* ===============================
+      YOUR ITEMS
+  =============================== */}
+
+  <div className="border rounded-2xl p-6">
+
+    <div className="flex items-center justify-between">
+
+      <h2 className="text-xl font-bold text-slate-900">
+        Your Items
+      </h2>
+
+      <Link
+        to="/cart"
+        className="text-sm underline text-gray-500 hover:text-slate-900"
+      >
+        Edit Cart
+      </Link>
+
+    </div>
+
+
+    {/* ITEMS */}
+
+    <div className="mt-6 space-y-6">
+
+      {items.map((item) => {
+
+        const price =
+          Number(item.price) || 0;
+
+        const quantity =
+          Number(item.quantity) || 1;
+
+        const productImage =
+          productImages[item.image];
+
+        const isUpdating =
+          updating === item._id;
+
+        return (
+
+          <div
+            key={item._id}
+            className="flex gap-4"
+          >
+
+            {/* ===============================
+                JERSEY IMAGE
+            =============================== */}
+
+            <img
+              src={productImage}
+              alt={item.name}
+              className="w-20 h-24 object-contain rounded-xl bg-gray-100 shrink-0"
+            />
+
+
+            {/* ===============================
+                PRODUCT INFO
+            =============================== */}
+
+            <div className="flex-1 min-w-0">
+
+              <div className="flex justify-between gap-2">
+
+                <div>
+
+                  <h3 className="font-bold text-slate-900 text-sm">
+                    {item.name}
+                  </h3>
+
+                  <p className="text-sm text-gray-500 mt-1">
+                    Size: {item.size}
+                  </p>
+
+                </div>
+
+
+                {/* REMOVE */}
+
+                <button
+                  onClick={() =>
+                    removeItem(item._id)
+                  }
+                  disabled={isUpdating}
+                  className="text-gray-400 hover:text-red-500 disabled:opacity-40 shrink-0"
+                >
+                  <FiTrash2 size={16} />
+                </button>
+
+              </div>
+
+
+              {/* PRICE */}
+
+              <p className="text-[#4CAF50] font-bold mt-2">
+                Rs {price.toLocaleString()}
+              </p>
+
+
+              {/* QUANTITY */}
+
+              <div className="flex items-center gap-3 mt-3">
+
+                <button
+                  onClick={() =>
+                    updateQuantity(
+                      item._id,
+                      quantity - 1
+                    )
+                  }
+                  disabled={
+                    quantity <= 1 ||
+                    isUpdating
+                  }
+                  className="w-7 h-7 rounded-full border flex items-center justify-center hover:bg-gray-100 disabled:opacity-40"
+                >
+                  <FiMinus size={12} />
+                </button>
+
+
+                <span className="font-semibold text-sm">
+                  {quantity}
+                </span>
+
+
+                <button
+                  onClick={() =>
+                    updateQuantity(
+                      item._id,
+                      quantity + 1
+                    )
+                  }
+                  disabled={isUpdating}
+                  className="w-7 h-7 rounded-full border flex items-center justify-center hover:bg-gray-100 disabled:opacity-40"
+                >
+                  <FiPlus size={12} />
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        );
+
+      })}
+
+    </div>
+
+  </div>
+
+
+  {/* ===============================
+      ORDER SUMMARY
+  =============================== */}
+
+  <div className="border rounded-2xl p-6">
+
+    <h2 className="text-xl font-bold text-slate-900">
+      Order Summary
+    </h2>
+
+
+    {/* ===============================
+        ITEM SUMMARY
+    =============================== */}
+
+    <div className="mt-6 space-y-4">
+
+      {items.map((item) => {
+
+        const price =
+          Number(item.price) || 0;
+
+        const quantity =
+          Number(item.quantity) || 1;
+
+        return (
+
+          <div
+            key={item._id}
+            className="flex justify-between gap-4 text-sm"
+          >
+
+            <span className="text-gray-500">
+              {item.name} × {quantity}
+            </span>
+
+            <span className="font-medium whitespace-nowrap">
+              Rs{" "}
+              {(price * quantity).toLocaleString()}
+            </span>
+
+          </div>
+
+        );
+
+      })}
+
+    </div>
+
+
+    {/* ===============================
+        TOTALS
+    =============================== */}
+
+    <div className="mt-6 pt-5 border-t space-y-4 text-sm">
+
+      {/* SUBTOTAL */}
+
+      <div className="flex justify-between">
+
+        <span className="text-gray-500">
+          Subtotal
+        </span>
+
+        <span className="font-semibold">
+          Rs {subtotal.toLocaleString()}
+        </span>
+
+      </div>
+
+
+      {/* DELIVERY */}
+
+      <div className="flex justify-between">
+
+        <span className="text-gray-500">
+          Delivery Fee
+        </span>
+
+        <span className="font-semibold">
+          Rs {delivery.toLocaleString()}
+        </span>
+
+      </div>
+
+
+      {/* TOTAL */}
+
+      <div className="border-t pt-4 flex justify-between text-lg">
+
+        <span className="font-bold">
+          Total
+        </span>
+
+        <span className="font-bold text-[#4CAF50]">
+          Rs {total.toLocaleString()}
+        </span>
+
+      </div>
+
+    </div>
+
+
+    {/* ===============================
+        PLACE ORDER
+    =============================== */}
+
+  <button
+  onClick={placeOrder}
+  disabled={placingOrder}
+  className="w-full mt-7 bg-[#4CAF50] text-white py-3.5 rounded-full font-semibold hover:bg-[#3d963f] transition disabled:opacity-60 disabled:cursor-not-allowed"
+>
+  {placingOrder
+    ? "Placing Order..."
+    : "Place Order"}
+</button>
+
+
+    {/* BACK TO CART */}
+
+    <Link
+      to="/cart"
+      className="block text-center mt-4 text-sm text-gray-500 hover:text-slate-900 underline"
+    >
+      Back to Cart
+    </Link>
+
+  </div>
+
+</div>
+</div>
+        </div>
+
+      </section>
+
+      <Letter />
+      <Footer />
+    </>
   );
 }
 

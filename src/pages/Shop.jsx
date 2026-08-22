@@ -1,13 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Review from "../components/Reviews";
 import ShopSidebar from "../components/ShopSidebar";
 import ProductCard from "../components/ProductCard";
-import products from "../data/products";
 
 function Shop() {
+  const [products, setProducts] = useState([]);
   const [category, setCategory] = useState("all");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:3000/products")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch products");
+        }
+
+        return response.json();
+      })
+      .then((data) => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+        setError("Unable to load products.");
+        setLoading(false);
+      });
+  }, []);
 
   const filteredProducts =
     category === "all"
@@ -46,23 +68,37 @@ function Shop() {
               <div className="flex justify-between items-center mb-8">
 
                 <h2 className="text-3xl font-bold">
-                  {filteredProducts.length} Jerseys
+                  {loading
+                    ? "Loading Jerseys..."
+                    : `${filteredProducts.length} Jerseys`}
                 </h2>
 
               </div>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {loading && (
+                <p className="text-gray-500">
+                  Loading products from Kitza...
+                </p>
+              )}
 
-                {filteredProducts.map((product) => (
+              {error && (
+                <p className="text-red-500">
+                  {error}
+                </p>
+              )}
 
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                  />
+              {!loading && !error && (
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-                ))}
+                  {filteredProducts.map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                    />
+                  ))}
 
-              </div>
+                </div>
+              )}
 
             </div>
 

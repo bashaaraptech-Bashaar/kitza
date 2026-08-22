@@ -1,18 +1,51 @@
-import logo from "../assets/logo.png";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 import {
   FiSearch,
-  FiUser,
   FiShoppingCart,
+  FiUser,
 } from "react-icons/fi";
 
+import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
+import CartDrawer from "../pages/CartDrawer";
+
 function Navbar() {
+  const [cartOpen, setCartOpen] = useState(false);
+  const [user, setUser] = useState(null);
+
+  // Check logged-in user
+  useEffect(() => {
+    const savedUser = localStorage.getItem("kitzaUser");
+
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (error) {
+        console.error("Invalid user data:", error);
+        localStorage.removeItem("kitzaUser");
+      }
+    }
+  }, []);
+
+  // Listen for "openCart" event from ProductDetails
+  useEffect(() => {
+    const handleOpenCart = () => {
+      setCartOpen(true);
+    };
+
+    window.addEventListener("openCart", handleOpenCart);
+
+    return () => {
+      window.removeEventListener("openCart", handleOpenCart);
+    };
+  }, []);
+
   return (
     <>
       {/* Top Bar */}
 
       <div className="bg-black text-white text-sm py-2 px-8 flex justify-center gap-3">
-
         <p>
           Free Worldwide Shipping on orders over $99
         </p>
@@ -22,8 +55,8 @@ function Navbar() {
         <p className="text-green-500 font-semibold">
           10% OFF your first order.
         </p>
-
       </div>
+
 
       {/* Navbar */}
 
@@ -33,32 +66,40 @@ function Navbar() {
 
           {/* Logo */}
 
-          <div>
+          <Link to="/">
+            <img
+              src={logo}
+              alt="Kitza Logo"
+              className="h-30 w-auto"
+            />
+          </Link>
 
-            <img src={logo} alt="Elite XI Logo" className="h-30 w-auto" />
-
-          </div>
 
           {/* Links */}
 
           <ul className="hidden lg:flex gap-10 font-medium">
 
-            <li className="text-green-600 cursor-pointer">
-              Home
+            <li>
+              <Link
+                to="/"
+                className="text-green-600"
+              >
+                Home
+              </Link>
             </li>
 
-            <Link
-  to="/shop"
-  className="hover:text-[#4CAF50] duration-300"
->
-  Shop
-</Link>
+            <li>
+              <Link
+                to="/shop"
+                className="hover:text-[#4CAF50] duration-300"
+              >
+                Shop
+              </Link>
+            </li>
 
             <li className="cursor-pointer hover:text-green-600">
               Contact Us
             </li>
-
-           
 
             <li className="cursor-pointer hover:text-green-600">
               New Arrivals
@@ -69,6 +110,7 @@ function Navbar() {
             </li>
 
           </ul>
+
 
           {/* Search */}
 
@@ -84,19 +126,54 @@ function Navbar() {
 
           </div>
 
+
           {/* Icons */}
 
-          <div className="flex gap-6 text-2xl">
+          <div className="flex items-center gap-6 text-2xl">
 
-            <FiUser className="cursor-pointer hover:text-green-600" />
+            {/* USER */}
 
-            <FiShoppingCart className="cursor-pointer hover:text-green-600" />
+            {user ? (
+
+              <Link
+                to="/account"
+                className="w-9 h-9 rounded-full bg-green-600 text-white flex items-center justify-center text-base font-bold cursor-pointer hover:bg-green-700 transition"
+              >
+                {user.name?.charAt(0).toUpperCase()}
+              </Link>
+
+            ) : (
+
+              <Link to="/auth">
+                <FiUser className="cursor-pointer hover:text-green-600" />
+              </Link>
+
+            )}
+
+
+            {/* CART */}
+
+            <button
+              onClick={() => setCartOpen(true)}
+              className="cursor-pointer"
+            >
+              <FiShoppingCart className="hover:text-green-600 transition" />
+            </button>
 
           </div>
 
         </div>
 
       </nav>
+
+
+      {/* CART DRAWER */}
+
+      <CartDrawer
+        open={cartOpen}
+        onClose={() => setCartOpen(false)}
+      />
+
     </>
   );
 }
