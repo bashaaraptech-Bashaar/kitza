@@ -8,7 +8,7 @@ function TopSelling() {
 
   useEffect(() => {
 
-    fetch("http://localhost:3000/products")
+    fetch("https://kitza-backend.vercel.app/products")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);

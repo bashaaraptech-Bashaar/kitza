@@ -73,9 +73,10 @@ export default function Auth() {
     setLoading(true);
 
     try {
+      
       const endpoint = isLogin
-        ? "http://localhost:3000/auth/login"
-        : "http://localhost:3000/auth/signup";
+        ? "https://kitza-backend.vercel.app/auth/login"
+        : "https://kitza-backend.vercel.app/auth/signup";
 
       const body = isLogin
         ? {

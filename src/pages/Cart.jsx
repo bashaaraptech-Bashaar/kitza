@@ -36,7 +36,7 @@ function Cart() {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:3000/cart",
+        "https://kitza-backend.vercel.app/cart",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -87,7 +87,7 @@ function Cart() {
       setUpdating(itemId);
 
       const response = await fetch(
-        `http://localhost:3000/cart/${itemId}`,
+       `https://kitza-backend.vercel.app/cart/${itemId}`,
         {
           method: "PATCH",
 
@@ -135,7 +135,7 @@ function Cart() {
       setUpdating(itemId);
 
       const response = await fetch(
-        `http://localhost:3000/cart/${itemId}`,
+        `https://kitza-backend.vercel.app/cart/${itemId}`,
         {
           method: "DELETE",
 

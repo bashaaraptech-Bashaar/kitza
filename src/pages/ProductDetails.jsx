@@ -21,7 +21,7 @@ function ProductDetails() {
   useEffect(() => {
     setProduct(null);
 
-    fetch("http://localhost:3000/products")
+  fetch("https://kitza-backend.vercel.app/products")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
@@ -72,7 +72,7 @@ function ProductDetails() {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/cart",
+       "https://kitza-backend.vercel.app/cart",
         {
           method: "POST",
 
