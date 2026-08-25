@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 
 import {
+  FiMenu,
   FiSearch,
   FiShoppingCart,
   FiUser,
+  FiX,
 } from "react-icons/fi";
 
 import { Link, NavLink } from "react-router-dom";
@@ -12,6 +14,7 @@ import CartDrawer from "../pages/CartDrawer";
 
 function Navbar() {
   const [cartOpen, setCartOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
 
   // Check logged-in user
@@ -77,7 +80,7 @@ function Navbar() {
 
           {/* Links */}
 
-          <ul className="hidden lg:flex gap-10 font-medium">
+          <ul className="hidden lg:flex gap-20 font-medium">
 
             <li>
               <NavLink
@@ -137,6 +140,24 @@ function Navbar() {
 
           <div className="flex items-center gap-4 sm:gap-6 text-xl sm:text-2xl shrink-0">
 
+            <button
+              type="button"
+              onClick={() => setMenuOpen((isOpen) => !isOpen)}
+              className="lg:hidden text-2xl"
+              aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={menuOpen}
+            >
+              {menuOpen ? <FiX /> : <FiMenu />}
+            </button>
+
+    {/* CART */}
+
+            <button
+              onClick={() => setCartOpen(true)}
+              className="cursor-pointer"
+            >
+              <FiShoppingCart className="hover:text-green-600 transition" />
+            </button>
             {/* USER */}
 
             {user ? (
@@ -157,20 +178,48 @@ function Navbar() {
             )}
 
 
-            {/* CART */}
-
-            <button
-              onClick={() => setCartOpen(true)}
-              className="cursor-pointer"
-            >
-              <FiShoppingCart className="hover:text-green-600 transition" />
-            </button>
+        
 
           </div>
 
         </div>
 
       </nav>
+
+      <div
+        className={`${menuOpen ? "block" : "hidden"} border-b bg-white px-4 py-4 shadow-sm lg:hidden`}
+      >
+        <nav className="mx-auto flex max-w-7xl flex-col gap-4 font-medium">
+          <NavLink
+            to="/"
+            end
+            onClick={() => setMenuOpen(false)}
+            className={({ isActive }) =>
+              `${isActive ? "text-green-600" : "text-gray-900"} hover:text-green-600 duration-300`
+            }
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/shop"
+            onClick={() => setMenuOpen(false)}
+            className={({ isActive }) =>
+              `${isActive ? "text-green-600" : "text-gray-900"} hover:text-green-600 duration-300`
+            }
+          >
+            Shop
+          </NavLink>
+          <NavLink
+            to="/contact"
+            onClick={() => setMenuOpen(false)}
+            className={({ isActive }) =>
+              `${isActive ? "text-green-600" : "text-gray-900"} hover:text-green-600 duration-300`
+            }
+          >
+            Contact Us
+          </NavLink>
+        </nav>
+      </div>
 
 
       {/* CART DRAWER */}
