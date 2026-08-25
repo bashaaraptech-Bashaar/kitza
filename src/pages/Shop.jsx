@@ -41,12 +41,12 @@ function Shop() {
       <Navbar />
 
       <section className="bg-[#fafafa] py-16 border-b">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-gray-500">
             Home / Shop
           </p>
 
-          <h1 className="text-5xl font-black mt-3">
+          <h1 className="text-4xl sm:text-5xl font-black mt-3">
             SHOP
           </h1>
         </div>
@@ -54,9 +54,9 @@ function Shop() {
 
       <section className="py-16">
 
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
-          <div className="grid lg:grid-cols-[280px_1fr] gap-10">
+          <div className="grid lg:grid-cols-[280px_minmax(0,1fr)] gap-8 lg:gap-10">
 
             <ShopSidebar
               category={category}
@@ -88,7 +88,7 @@ function Shop() {
               )}
 
               {!loading && !error && (
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
 
                   {filteredProducts.map((product) => (
                     <ProductCard

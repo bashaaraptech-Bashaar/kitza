@@ -22,15 +22,15 @@ function TopSelling() {
   return (
     <section className="py-24 bg-[#fafafa]">
 
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
-        <h2 className="text-5xl font-black text-center mb-4">
+        <h2 className="text-3xl sm:text-5xl font-black text-center mb-4">
           TOP SELLING
         </h2>
 
         <div className="w-24 h-1 bg-[#4CAF50] mx-auto rounded-full mb-16"></div>
 
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8">
 
           {products
             .filter((product) =>

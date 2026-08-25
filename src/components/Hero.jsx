@@ -5,13 +5,13 @@ import { FiPackage } from "react-icons/fi";
 function Hero() {
 return(
 <section>
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="grid lg:grid-cols-2 items-center min-h-[700px] gap-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+        <div className="grid lg:grid-cols-2 items-center min-h-130 lg:min-h-175 gap-8 lg:gap-10 py-10 lg:py-0">
 
           {/* LEFT */}
           <div className="order-2 lg:order-1">
 
-            <h1 className="text-5xl md:text-6xl xl:text-7xl font-black leading-none text-[#111111]">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-black leading-none text-[#111111]">
               FIND JERSEYS
               <br />
               THAT MATCH
@@ -25,7 +25,7 @@ return(
             </p>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mt-10 lg:mt-12">
 
               <div className="flex items-center gap-3">
                 <FaShieldAlt className="text-black shrink-0" size={22} />
@@ -64,7 +64,7 @@ return(
           </div>
 
           {/* RIGHT */}
-          <div className="relative flex justify-center items-center order-1 lg:order-2 min-h-full overflow-visible">
+          <div className="relative flex justify-center items-center order-1 lg:order-2 min-h-65 sm:min-h-90 lg:min-h-full overflow-visible">
 
             <div className="absolute top-10 left-6 text-5xl text-black">
               ✦
@@ -77,7 +77,7 @@ return(
             <img
               src={HeroImage}
               alt="Football Jerseys"
-              className="w-full max-w-4xl h-auto object-contain scale-110"
+              className="w-full max-w-4xl h-auto object-contain scale-100 lg:scale-110"
             />
 
           </div>

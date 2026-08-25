@@ -39,18 +39,18 @@ function LeagueSection() {
     <section className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
 
-        <h2 className="text-5xl font-black text-center">
+        <h2 className="text-3xl sm:text-5xl font-black text-center">
           SHOP BY{" "}
           <span className="text-[#4CAF50]">
             LEAGUE
           </span>
         </h2>
 
-        <p className="text-center text-gray-500 mt-5 mb-16 text-lg">
+        <p className="text-center text-gray-500 mt-5 mb-10 sm:mb-16 text-base sm:text-lg">
           Explore jerseys from the world's biggest leagues and tournaments.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 gap-3 sm:gap-8">
 
           {leagues.map((league) => (
 

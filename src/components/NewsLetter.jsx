@@ -4,15 +4,15 @@ function Newsletter() {
   return (
     <section className="py-24 bg-white">
 
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
-        <div className="bg-[#111111] rounded-3xl p-10 lg:p-14">
+        <div className="bg-[#111111] rounded-3xl p-6 sm:p-10 lg:p-14">
 
           <div className="grid lg:grid-cols-2 gap-10 items-center">
 
             <div>
 
-              <h2 className="text-white text-4xl lg:text-5xl font-black leading-tight">
+              <h2 className="text-white text-3xl sm:text-4xl lg:text-5xl font-black leading-tight">
 
                 NEVER MISS A
 

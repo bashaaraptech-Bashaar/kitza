@@ -114,13 +114,13 @@ function ProductDetails() {
     <>
       <Navbar />
 
-      <section className="max-w-7xl mx-auto px-6 py-16">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
 
         <p className="text-gray-500 mb-8">
           Home / Shop / {product.name}
         </p>
 
-        <div className="grid lg:grid-cols-2 gap-16">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
 
           {/* IMAGE */}
           <div>
@@ -138,14 +138,14 @@ function ProductDetails() {
           {/* INFO */}
           <div>
 
-            <h1 className="text-5xl font-black">
+            <h1 className="text-3xl sm:text-5xl font-black leading-tight">
               {product.name}
             </h1>
 
             {/* RATING */}
             <div className="flex items-center gap-2 mt-5">
 
-              <div className="flex items-center gap-1 text-[#4CAF50] text-xl">
+              <div className="flex flex-wrap items-center gap-1 text-[#4CAF50] text-lg sm:text-xl">
 
                 <FaStar />
                 <FaStar />
@@ -162,9 +162,9 @@ function ProductDetails() {
             </div>
 
             {/* PRICE */}
-            <div className="flex items-center gap-4 mt-8">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-8">
 
-              <h2 className="text-4xl font-black text-[#4CAF50]">
+              <h2 className="text-3xl sm:text-4xl font-black text-[#4CAF50]">
                 Rs {product.price.toLocaleString()}
               </h2>
 
@@ -200,7 +200,7 @@ function ProductDetails() {
                 Select Size
               </h3>
 
-              <div className="flex gap-4 mt-5">
+              <div className="flex flex-wrap gap-3 sm:gap-4 mt-5">
 
                 {["S", "M", "L", "XL", "XXL"].map((item) => (
 
@@ -259,12 +259,12 @@ function ProductDetails() {
             </div>
 
             {/* BUTTONS */}
-            <div className="flex gap-5 mt-12">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 mt-12">
 
               {/* ADD TO CART */}
               <button
                 onClick={handleAddToCart}
-                className="bg-black text-white px-8 py-3 rounded-full font-semibold hover:bg-gray-800 transition"
+                className="bg-black text-white px-8 py-3 rounded-full font-semibold hover:bg-gray-800 transition text-center"
               >
                 Add to Cart
               </button>
@@ -288,7 +288,7 @@ function ProductDetails() {
                   window.location.href = "/checkout";
 
                 }}
-                className="bg-[#4CAF50] text-white px-8 py-3 rounded-full font-semibold hover:bg-green-600 transition"
+                className="bg-[#4CAF50] text-white px-8 py-3 rounded-full font-semibold hover:bg-green-600 transition text-center"
               >
                 Buy Now
               </button>
@@ -429,7 +429,7 @@ function ProductDetails() {
 
           <div className="w-24 h-1 bg-[#4CAF50] mx-auto mt-4 rounded-full"></div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8 mt-12 sm:mt-16">
 
             {relatedProducts.map((item) => (
               <ProductCard

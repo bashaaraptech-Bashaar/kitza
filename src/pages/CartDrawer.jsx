@@ -236,7 +236,7 @@ function CartDrawer({ open, onClose }) {
 
       <div
         onClick={onClose}
-        className={`fixed inset-0 bg-black/40 z-[60]
+        className={`fixed inset-0 bg-black/40 z-60
         transition-opacity duration-300
         ${
           open
@@ -252,8 +252,8 @@ function CartDrawer({ open, onClose }) {
 
       <div
         className={`fixed top-0 right-0 h-screen
-        w-[90%] sm:w-[420px]
-        bg-white z-[70] shadow-2xl
+        w-[82%] max-w-90 sm:w-105 sm:max-w-none
+        bg-white z-70 shadow-2xl
         transition-transform duration-300 ease-out
         ${
           open
@@ -269,12 +269,12 @@ function CartDrawer({ open, onClose }) {
 
         <div
           className="flex items-center justify-between
-          px-5 py-5 border-b"
+          px-4 py-4 sm:px-5 sm:py-5 border-b"
         >
 
           <div>
 
-            <h2 className="text-xl font-bold text-slate-900">
+            <h2 className="text-lg sm:text-xl font-bold text-slate-900">
               Shopping Cart
             </h2>
 
@@ -357,7 +357,7 @@ function CartDrawer({ open, onClose }) {
           <>
 
             <div
-              className="p-5 pb-72
+              className="p-4 pb-72 sm:p-5 sm:pb-72
               overflow-y-auto
               h-[calc(100vh-80px)]"
             >
@@ -380,7 +380,7 @@ function CartDrawer({ open, onClose }) {
                 return (
                   <div
                     key={item._id}
-                    className="flex gap-4 mb-6"
+                    className="flex gap-3 sm:gap-4 mb-6"
                   >
 
                     {/* IMAGE */}
@@ -388,8 +388,7 @@ function CartDrawer({ open, onClose }) {
                     <img
                       src={productImage}
                       alt={item.name}
-                      className="w-24 h-28
-                      sm:w-28 sm:h-32
+                      className="w-16 h-20 sm:w-28 sm:h-32
                       object-contain
                       rounded-xl bg-gray-100"
                     />
@@ -407,8 +406,8 @@ function CartDrawer({ open, onClose }) {
                       >
 
                         <h3
-                          className="font-bold
-                          text-slate-900"
+                          className="font-bold text-sm sm:text-base
+                          text-slate-900 wrap-break-word"
                         >
                           {item.name}
                         </h3>
@@ -459,7 +458,7 @@ function CartDrawer({ open, onClose }) {
 
                       <div
                         className="flex
-                        items-center gap-3 mt-5"
+                        items-center gap-2 sm:gap-3 mt-4 sm:mt-5"
                       >
 
                         {/* MINUS */}
@@ -491,7 +490,7 @@ function CartDrawer({ open, onClose }) {
 
                         <span
                           className="font-semibold
-                          min-w-[15px]
+                          min-w-3.75
                           text-center"
                         >
                           {quantity}
@@ -537,7 +536,7 @@ function CartDrawer({ open, onClose }) {
             <div
               className="absolute bottom-0
               left-0 right-0 bg-white
-              border-t p-5"
+              border-t p-4 sm:p-5"
             >
 
               {/* SUBTOTAL */}

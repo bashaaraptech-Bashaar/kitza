@@ -6,7 +6,7 @@ import {
   FiUser,
 } from "react-icons/fi";
 
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
 import CartDrawer from "../pages/CartDrawer";
 
@@ -45,7 +45,7 @@ function Navbar() {
     <>
       {/* Top Bar */}
 
-      <div className="bg-black text-white text-sm py-2 px-8 flex justify-center gap-3">
+      <div className="bg-black text-white text-xs sm:text-sm py-2 px-4 sm:px-8 flex flex-wrap justify-center gap-x-3 gap-y-1 text-center">
         <p>
           Free Worldwide Shipping on orders over $99
         </p>
@@ -62,7 +62,7 @@ function Navbar() {
 
       <nav className="sticky top-0 z-50 bg-white shadow-sm">
 
-        <div className="max-w-7xl mx-auto px-8 h-24 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-24 flex items-center justify-between gap-4">
 
           {/* Logo */}
 
@@ -70,7 +70,7 @@ function Navbar() {
             <img
               src={logo}
               alt="Kitza Logo"
-              className="h-30 w-auto"
+              className="h-16 sm:h-20 lg:h-24 w-auto"
             />
           </Link>
 
@@ -80,34 +80,40 @@ function Navbar() {
           <ul className="hidden lg:flex gap-10 font-medium">
 
             <li>
-              <Link
+              <NavLink
                 to="/"
-                className="text-green-600"
+                end
+                className={({ isActive }) =>
+                  `${isActive ? "text-green-600" : "text-gray-900"} hover:text-green-600 duration-300`
+                }
               >
                 Home
-              </Link>
+              </NavLink>
             </li>
 
             <li>
-              <Link
+              <NavLink
                 to="/shop"
-                className="hover:text-[#4CAF50] duration-300"
+                className={({ isActive }) =>
+                  `${isActive ? "text-green-600" : "text-gray-900"} hover:text-green-600 duration-300`
+                }
               >
                 Shop
-              </Link>
+              </NavLink>
             </li>
 
-            <li className="cursor-pointer hover:text-green-600">
-              Contact Us
+            <li>
+              <NavLink
+                to="/contact"
+                className={({ isActive }) =>
+                  `${isActive ? "text-green-600" : "text-gray-900"} hover:text-green-600 duration-300`
+                }
+              >
+                Contact Us
+              </NavLink>
             </li>
 
-            <li className="cursor-pointer hover:text-green-600">
-              New Arrivals
-            </li>
-
-            <li className="cursor-pointer hover:text-green-600">
-              Sale
-            </li>
+           
 
           </ul>
 
@@ -129,7 +135,7 @@ function Navbar() {
 
           {/* Icons */}
 
-          <div className="flex items-center gap-6 text-2xl">
+          <div className="flex items-center gap-4 sm:gap-6 text-xl sm:text-2xl shrink-0">
 
             {/* USER */}
 

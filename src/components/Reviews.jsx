@@ -38,9 +38,9 @@ function Reviews() {
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Heading */}
-        <div className="flex items-center justify-between mb-16">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-10 sm:mb-16">
 
-          <h2 className="text-5xl font-black">
+          <h2 className="text-3xl sm:text-5xl font-black">
             WHAT FOOTBALL{" "}
             <span className="text-[#4CAF50]">FANS</span>{" "}
             SAY
@@ -59,13 +59,13 @@ function Reviews() {
         </div>
 
         {/* Cards */}
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8">
 
           {reviews.map((review) => (
 
             <div
               key={review.id}
-              className="border rounded-3xl p-8 hover:shadow-xl transition duration-300"
+              className="border rounded-2xl sm:rounded-3xl p-4 sm:p-8 hover:shadow-xl transition duration-300"
             >
 
               {/* Stars */}
@@ -76,7 +76,7 @@ function Reviews() {
               </div>
 
               {/* Review */}
-              <p className="text-gray-600 leading-8 min-h-[120px]">
+              <p className="text-gray-600 leading-7 sm:leading-8 min-h-[120px] text-sm sm:text-base">
                 "{review.review}"
               </p>
 
