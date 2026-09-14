@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { Link } from "react-router-dom";
+import { fetchProducts } from "../lib/productsApi";
+import localProducts from "../data/products";
 
 function TopSelling() {
 
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(localProducts);
 
   useEffect(() => {
 
-   fetch("https://kitza-backend.vercel.app/products")
-      .then((res) => res.json())
+    fetchProducts()
       .then((data) => {
         setProducts(data);
       })
@@ -40,6 +41,7 @@ function TopSelling() {
               <ProductCard
                 key={product.id}
                 product={product}
+                priority
               />
             ))}
 

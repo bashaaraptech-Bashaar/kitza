@@ -1,21 +1,26 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
-import Auth from "./pages/auth";
-import Account from "./pages/Account";
-import Shop from "./pages/Shop";
-import Cart from "./pages/Cart";
-import ProductDetails from "./pages/ProductDetails";
-import Checkout from "./pages/Checkout";
-import OrderSuccess from "./pages/OrderSuccess";
-import Contact from "./pages/Contact";
 import ScrollToTop from "./components/ScrollToTop";
+import Seo from "./components/Seo";
+
+const Auth = lazy(() => import("./pages/auth"));
+const Account = lazy(() => import("./pages/Account"));
+const Shop = lazy(() => import("./pages/Shop"));
+const Cart = lazy(() => import("./pages/Cart"));
+const ProductDetails = lazy(() => import("./pages/ProductDetails"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const OrderSuccess = lazy(() => import("./pages/OrderSuccess"));
+const Contact = lazy(() => import("./pages/Contact"));
 
 function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Routes>
+      <Seo />
+      <Suspense fallback={null}>
+        <Routes>
 
         <Route path="/" element={<Home />} />
 <Route path="/auth" element={<Auth/>} />
@@ -32,7 +37,8 @@ function App() {
 <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-success" element={<OrderSuccess />} />
-      </Routes>
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

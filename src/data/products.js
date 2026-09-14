@@ -1,87 +1,87 @@
 // ================= CLUB =================
 
-import realmadridjersey from "../assets/jerseys/club/realmadridjersey.png";
-import realmadrid2526away from "../assets/jerseys/club/madrid2526away.png";
-import realmadrid2627away from "../assets/jerseys/club/madrid2627away.png";
+import realmadridjersey from "../assets/jerseys/club/realmadridjersey.webp";
+import realmadrid2526away from "../assets/jerseys/club/madrid2526away.webp";
+import realmadrid2627away from "../assets/jerseys/club/madrid2627away.webp";
 
-import barcajersey from "../assets/jerseys/club/barcajersey.png";
-import barcahomejersey from "../assets/jerseys/club/barcahomejersey.png";
-import barca2425jersey from "../assets/jerseys/club/barca2425jersey.png";
-import barca2526jersey from "../assets/jerseys/club/barca2526jersey.png";
+import barcajersey from "../assets/jerseys/club/barcajersey.webp";
+import barcahomejersey from "../assets/jerseys/club/barcahomejersey.webp";
+import barca2425jersey from "../assets/jerseys/club/barca2425jersey.webp";
+import barca2526jersey from "../assets/jerseys/club/barca2526jersey.webp";
 
-import manutdjersey from "../assets/jerseys/club/manutdjersey.png";
-import manutdhomejersey from "../assets/jerseys/club/manutdhomejersey.png";
+import manutdjersey from "../assets/jerseys/club/manutdjersey.webp";
+import manutdhomejersey from "../assets/jerseys/club/manutdhomejersey.webp";
 
-import mancityjersey from "../assets/jerseys/club/mancityjersey.png";
-import mancity2526jersey from "../assets/jerseys/club/mancityj2526jersey.png";
+import mancityjersey from "../assets/jerseys/club/mancityjersey.webp";
+import mancity2526jersey from "../assets/jerseys/club/mancityj2526jersey.webp";
 
-import arsenaljersey from "../assets/jerseys/club/arsenaljersey.png";
-import arsenahomejersey from "../assets/jerseys/club/arsenahomeljersey.png";
+import arsenaljersey from "../assets/jerseys/club/arsenaljersey.webp";
+import arsenahomejersey from "../assets/jerseys/club/arsenahomeljersey.webp";
 
-import chelseajersey from "../assets/jerseys/club/chelseajersey.png";
+import chelseajersey from "../assets/jerseys/club/chelseajersey.webp";
 
-import liverpooljersey from "../assets/jerseys/club/liverpooljersey.png";
+import liverpooljersey from "../assets/jerseys/club/liverpooljersey.webp";
 
-import interjersey from "../assets/jerseys/club/interjersey.png";
-import intermiami from "../assets/jerseys/club/intermiami.png";
+import interjersey from "../assets/jerseys/club/interjersey.webp";
+import intermiami from "../assets/jerseys/club/intermiami.webp";
 
-import juventus from "../assets/jerseys/club/juventus.png";
-import milanjersey from "../assets/jerseys/club/milanjersey.png";
+import juventus from "../assets/jerseys/club/juventus.webp";
+import milanjersey from "../assets/jerseys/club/milanjersey.webp";
 
-import atletico from "../assets/jerseys/club/atletico.png";
+import atletico from "../assets/jerseys/club/atletico.webp";
 
-import bayern from "../assets/jerseys/club/bayern.png";
-import bayernaway from "../assets/jerseys/club/bayern-away.png";
+import bayern from "../assets/jerseys/club/bayern.webp";
+import bayernaway from "../assets/jerseys/club/bayern-away.webp";
 
-import alnassr from "../assets/jerseys/club/alnassr.png";
+import alnassr from "../assets/jerseys/club/alnassr.webp";
 
 
 // ================= INTERNATIONAL =================
 
-import argentinaHome from "../assets/jerseys/international/argentina-home.png";
-import argentinaAway from "../assets/jerseys/international/argentina-away.png";
+import argentinaHome from "../assets/jerseys/international/argentina-home.webp";
+import argentinaAway from "../assets/jerseys/international/argentina-away.webp";
 
-import brazilHome from "../assets/jerseys/international/brazil-home.png";
-import brazilAway from "../assets/jerseys/international/brazil-away.png";
+import brazilHome from "../assets/jerseys/international/brazil-home.webp";
+import brazilAway from "../assets/jerseys/international/brazil-away.webp";
 
-import portugalHome from "../assets/jerseys/international/portugal-home.png";
-import portugalAway from "../assets/jerseys/international/portugal-away.png";
+import portugalHome from "../assets/jerseys/international/portugal-home.webp";
+import portugalAway from "../assets/jerseys/international/portugal-away.webp";
 
-import germanyHome from "../assets/jerseys/international/germany-home.png";
-import germanyAway from "../assets/jerseys/international/germany-away.png";
+import germanyHome from "../assets/jerseys/international/germany-home.webp";
+import germanyAway from "../assets/jerseys/international/germany-away.webp";
 
-import franceHome from "../assets/jerseys/international/france-home.png";
-import franceAway from "../assets/jerseys/international/france-away.png";
+import franceHome from "../assets/jerseys/international/france-home.webp";
+import franceAway from "../assets/jerseys/international/france-away.webp";
 
-import spainHome from "../assets/jerseys/international/spain-home.png";
-import spainAway from "../assets/jerseys/international/spain-away.png";
+import spainHome from "../assets/jerseys/international/spain-home.webp";
+import spainAway from "../assets/jerseys/international/spain-away.webp";
 
-import japan from "../assets/jerseys/international/japan.png";
-import norway from "../assets/jerseys/international/norway.png";
-import colombia from "../assets/jerseys/international/colombia.png";
+import japan from "../assets/jerseys/international/japan.webp";
+import norway from "../assets/jerseys/international/norway.webp";
+import colombia from "../assets/jerseys/international/colombia.webp";
 
 
 // ================= RETRO =================
 
-import manutd0708 from "../assets/jerseys/retro/manutd07-08.png";
-import arsenal0203 from "../assets/jerseys/retro/arsenal02-03.png";
+import manutd0708 from "../assets/jerseys/retro/manutd07-08.webp";
+import arsenal0203 from "../assets/jerseys/retro/arsenal02-03.webp";
 
-import rm2122 from "../assets/jerseys/retro/realmadrid21-22.png";
-import rm1718 from "../assets/jerseys/retro/realmadrid17-18.png";
-import rm1415 from "../assets/jerseys/retro/realmadrid14-15.png";
-import rm1112 from "../assets/jerseys/retro/realmadrid11-12.png";
-import rm1617 from "../assets/jerseys/retro/realmadrid16-17.png";
-import rm9798 from "../assets/jerseys/retro/realmadrid97-98.png";
+import rm2122 from "../assets/jerseys/retro/realmadrid21-22.webp";
+import rm1718 from "../assets/jerseys/retro/realmadrid17-18.webp";
+import rm1415 from "../assets/jerseys/retro/realmadrid14-15.webp";
+import rm1112 from "../assets/jerseys/retro/realmadrid11-12.webp";
+import rm1617 from "../assets/jerseys/retro/realmadrid16-17.webp";
+import rm9798 from "../assets/jerseys/retro/realmadrid97-98.webp";
 
-import barca0809 from "../assets/jerseys/retro/barca08-09.png";
-import barca1011 from "../assets/jerseys/retro/barca10-11.png";
-import barca1415 from "../assets/jerseys/retro/barca1415.png";
-import barca1415away from "../assets/jerseys/retro/barca1415away.png";
-import barca1516away from "../assets/jerseys/retro/barca1516away.png";
-import barca1718away from "../assets/jerseys/retro/barca17-18away.png";
+import barca0809 from "../assets/jerseys/retro/barca08-09.webp";
+import barca1011 from "../assets/jerseys/retro/barca10-11.webp";
+import barca1415 from "../assets/jerseys/retro/barca1415.webp";
+import barca1415away from "../assets/jerseys/retro/barca1415away.webp";
+import barca1516away from "../assets/jerseys/retro/barca1516away.webp";
+import barca1718away from "../assets/jerseys/retro/barca17-18away.webp";
 
-import chelsea1011 from "../assets/jerseys/retro/chelsea10-11.png";
-import chelsea1617 from "../assets/jerseys/retro/chelsea16-17.png";
+import chelsea1011 from "../assets/jerseys/retro/chelsea10-11.webp";
+import chelsea1617 from "../assets/jerseys/retro/chelsea16-17.webp";
 
 const products = [
 

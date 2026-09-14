@@ -6,6 +6,8 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Review from "../components/Reviews";
 import { productImages } from "../data/products";
+import Seo from "../components/Seo";
+import { fetchProducts } from "../lib/productsApi";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -19,10 +21,7 @@ function ProductDetails() {
 
   // Fetch products from backend
   useEffect(() => {
-    setProduct(null);
-
-  fetch("https://kitza-backend.vercel.app/products")
-      .then((res) => res.json())
+    fetchProducts()
       .then((data) => {
         setProducts(data);
 
@@ -51,6 +50,29 @@ function ProductDetails() {
       </>
     );
   }
+
+  const productUrl = `${window.location.origin}/product/${product.id}`;
+  const productImageUrl = `${window.location.origin}${productImages[product.image]}`;
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: `Premium football jersey for ${product.club || product.country || "football fans"}.`,
+    image: [productImageUrl],
+    brand: { "@type": "Brand", name: "Kitza" },
+    offers: {
+      "@type": "Offer",
+      url: productUrl,
+      priceCurrency: "INR",
+      price: product.price,
+      availability: "https://schema.org/InStock",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: product.rating,
+      reviewCount: product.reviews,
+    },
+  };
 
   // Related products
   const relatedProducts = products
@@ -112,6 +134,12 @@ function ProductDetails() {
 
   return (
     <>
+      <Seo
+        title={product.name}
+        description={`Shop the ${product.name} at Kitza. Premium football jerseys with worldwide shipping.`}
+        image={productImageUrl}
+        structuredData={productSchema}
+      />
       <Navbar />
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
@@ -127,8 +155,12 @@ function ProductDetails() {
             <div className="bg-[#f7f7f7] rounded-3xl p-8">
 
               <img
-                src={productImages[product.image]}
+                src={productImages[product.image] || product.image}
                 alt={product.name}
+                loading="eager"
+                fetchPriority="high"
+                width="848"
+                height="848"
                 className="w-full"
               />
 
@@ -236,6 +268,7 @@ function ProductDetails() {
                     quantity > 1 &&
                     setQuantity(quantity - 1)
                   }
+                  aria-label="Decrease quantity"
                   className="w-12 h-12 rounded-full bg-gray-100 text-2xl hover:bg-[#4CAF50] hover:text-white duration-300"
                 >
                   -
@@ -249,6 +282,7 @@ function ProductDetails() {
                   onClick={() =>
                     setQuantity(quantity + 1)
                   }
+                  aria-label="Increase quantity"
                   className="w-12 h-12 rounded-full bg-gray-100 text-2xl hover:bg-[#4CAF50] hover:text-white duration-300"
                 >
                   +

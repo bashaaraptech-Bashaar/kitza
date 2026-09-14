@@ -62,6 +62,7 @@ function LeagueSection() {
               <img
                 src={league.image}
                 alt={league.title}
+                loading="lazy"
                 className="w-full h-full object-cover group-hover:scale-105 duration-500"
               />
 

@@ -3,7 +3,9 @@ import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { productImages } from "../data/products";
 
-function ProductCard({ product }) {
+function ProductCard({ product, priority = false }) {
+  const imageSource = productImages[product.image] || product.image;
+
   return (
     <Link to={`/product/${product.id}`}>
 
@@ -18,8 +20,12 @@ function ProductCard({ product }) {
           <FiHeart className="absolute right-2 top-2 sm:right-4 sm:top-4 text-xl sm:text-2xl cursor-pointer hover:text-red-500 duration-300" />
 
           <img
-            src={productImages[product.image]}
+            src={imageSource}
             alt={product.name}
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : "auto"}
+            width="320"
+            height="320"
             className="h-40 sm:h-64 w-full mx-auto object-contain group-hover:scale-110 duration-300"
           />
 
@@ -39,7 +45,7 @@ function ProductCard({ product }) {
               {product.rating}
             </span>
 
-            <span className="text-gray-400">
+            <span className="text-gray-500">
               ({product.reviews})
             </span>
 
@@ -48,7 +54,7 @@ function ProductCard({ product }) {
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-4">
 
             {product.oldPrice && (
-              <span className="line-through text-gray-400">
+              <span className="line-through text-gray-500">
                 Rs {product.oldPrice.toLocaleString()}
               </span>
             )}

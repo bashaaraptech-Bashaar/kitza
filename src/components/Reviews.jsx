@@ -47,11 +47,11 @@ function Reviews() {
           </h2>
 
           <div className="hidden md:flex gap-3">
-            <button className="w-12 h-12 rounded-full border flex items-center justify-center hover:bg-[#4CAF50] hover:text-white duration-300">
+            <button aria-label="Previous review" className="w-12 h-12 rounded-full border flex items-center justify-center hover:bg-[#4CAF50] hover:text-white duration-300">
               <FiChevronLeft size={22} />
             </button>
 
-            <button className="w-12 h-12 rounded-full border flex items-center justify-center hover:bg-[#4CAF50] hover:text-white duration-300">
+            <button aria-label="Next review" className="w-12 h-12 rounded-full border flex items-center justify-center hover:bg-[#4CAF50] hover:text-white duration-300">
               <FiChevronRight size={22} />
             </button>
           </div>

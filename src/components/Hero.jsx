@@ -1,4 +1,4 @@
-import HeroImage from "../assets/hero/hero.png";
+import HeroImage from "../assets/hero/hero.webp";
 import { FaTshirt, FaFire, FaShieldAlt } from "react-icons/fa";
 import { FiPackage } from "react-icons/fi";
 
@@ -77,6 +77,9 @@ return(
             <img
               src={HeroImage}
               alt="Football Jerseys"
+              fetchPriority="high"
+              width="493"
+              height="328"
               className="w-full max-w-4xl h-auto object-contain scale-100 lg:scale-110"
             />
 

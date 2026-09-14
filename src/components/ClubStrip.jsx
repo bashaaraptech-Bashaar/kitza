@@ -1,11 +1,11 @@
-import rm from "../assets/clubs/realmadridlogo.png";
-import barca from "../assets/clubs/barcalogo.png";
-import city from "../assets/clubs/mancitylogo.png";
-import liverpool from "../assets/clubs/liverpoollogo.png";
-import arsenal from "../assets/clubs/manutdlogo.png";
-import bayern from "../assets/clubs/bayernlogo.png";
-import psg from "../assets/clubs/psglogo.png";
-import chelsea from "../assets/clubs/chelsealogo.png";
+import rm from "../assets/clubs/realmadridlogo.webp";
+import barca from "../assets/clubs/barcalogo.webp";
+import city from "../assets/clubs/mancitylogo.webp";
+import liverpool from "../assets/clubs/liverpoollogo.webp";
+import arsenal from "../assets/clubs/manutdlogo.webp";
+import bayern from "../assets/clubs/bayernlogo.webp";
+import psg from "../assets/clubs/psglogo.webp";
+import chelsea from "../assets/clubs/chelsealogo.webp";
 
 function ClubStrip() {
 
@@ -35,6 +35,9 @@ function ClubStrip() {
               <img
                 src={club}
                 alt="Club Logo"
+                loading="lazy"
+                width="120"
+                height="120"
                 className="h-30 object-contain hover:scale-110 duration-300 cursor-pointer"
               />
             </div>

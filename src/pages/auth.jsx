@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   FaLock,
   FaUser,
@@ -416,6 +416,7 @@ if (data.token) {
                 onClick={() =>
                   setShowPassword(!showPassword)
                 }
+                aria-label={showPassword ? "Hide password" : "Show password"}
                 className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-gray-600"
               >
                 {showPassword ? (
@@ -463,6 +464,7 @@ if (data.token) {
                       !showConfirmPassword
                     )
                   }
+                  aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
                   className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-gray-600"
                 >
                   {showConfirmPassword ? (

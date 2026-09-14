@@ -318,6 +318,7 @@ function Cart() {
                       <img
                         src={productImage}
                         alt={item.name}
+                        loading="lazy"
                         className="w-28 h-32 md:w-36 md:h-40 object-contain rounded-xl bg-gray-100 shrink-0"
                       />
 
@@ -350,6 +351,7 @@ function Cart() {
                             disabled={
                               isUpdating
                             }
+                            aria-label={`Remove ${item.name}`}
                             className="text-gray-400 hover:text-red-500 transition shrink-0 disabled:opacity-40"
                           >
                             <FiTrash2
@@ -387,6 +389,7 @@ function Cart() {
                                 quantity <= 1 ||
                                 isUpdating
                               }
+                              aria-label={`Decrease quantity for ${item.name}`}
                               className="w-9 h-9 rounded-full border flex items-center justify-center hover:bg-gray-100 transition disabled:opacity-40"
                             >
                               <FiMinus
@@ -408,6 +411,7 @@ function Cart() {
                               disabled={
                                 isUpdating
                               }
+                              aria-label={`Increase quantity for ${item.name}`}
                               className="w-9 h-9 rounded-full border flex items-center justify-center hover:bg-gray-100 transition disabled:opacity-40"
                             >
                               <FiPlus

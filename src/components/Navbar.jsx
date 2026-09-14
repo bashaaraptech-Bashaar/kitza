@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 
 import {
   FiMenu,
@@ -9,27 +9,28 @@ import {
 } from "react-icons/fi";
 
 import { Link, NavLink } from "react-router-dom";
-import logo from "../assets/logo.png";
-import CartDrawer from "../pages/CartDrawer";
+import logo from "../assets/logo.webp";
+
+const CartDrawer = lazy(() => import("../pages/CartDrawer"));
 
 function Navbar() {
   const [cartOpen, setCartOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [user, setUser] = useState(null);
-
-  // Check logged-in user
-  useEffect(() => {
+  const [user] = useState(() => {
     const savedUser = localStorage.getItem("kitzaUser");
 
-    if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser));
-      } catch (error) {
-        console.error("Invalid user data:", error);
-        localStorage.removeItem("kitzaUser");
-      }
+    if (!savedUser) {
+      return null;
     }
-  }, []);
+
+    try {
+      return JSON.parse(savedUser);
+    } catch (error) {
+      console.error("Invalid user data:", error);
+      localStorage.removeItem("kitzaUser");
+      return null;
+    }
+  });
 
   // Listen for "openCart" event from ProductDetails
   useEffect(() => {
@@ -73,6 +74,8 @@ function Navbar() {
             <img
               src={logo}
               alt="Kitza Logo"
+              width="300"
+              height="200"
               className="h-16 sm:h-20 lg:h-24 w-auto"
             />
           </Link>
@@ -155,6 +158,7 @@ function Navbar() {
             <button
               onClick={() => setCartOpen(true)}
               className="cursor-pointer"
+              aria-label="Shopping cart"
             >
               <FiShoppingCart className="hover:text-green-600 transition" />
             </button>
@@ -171,7 +175,7 @@ function Navbar() {
 
             ) : (
 
-              <Link to="/auth">
+              <Link to="/auth" aria-label="Account login">
                 <FiUser className="cursor-pointer hover:text-green-600" />
               </Link>
 
@@ -224,10 +228,14 @@ function Navbar() {
 
       {/* CART DRAWER */}
 
-      <CartDrawer
-        open={cartOpen}
-        onClose={() => setCartOpen(false)}
-      />
+      <Suspense fallback={null}>
+        {cartOpen && (
+          <CartDrawer
+            open={cartOpen}
+            onClose={() => setCartOpen(false)}
+          />
+        )}
+      </Suspense>
 
     </>
   );

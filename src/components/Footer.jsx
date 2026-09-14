@@ -1,4 +1,4 @@
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.webp";
 
 import {
   FaInstagram,
@@ -22,6 +22,9 @@ function Footer() {
             <img
               src={logo}
               alt="Kitza"
+              loading="lazy"
+              width="300"
+              height="200"
               className="h-50 "
             />
 
@@ -36,6 +39,7 @@ function Footer() {
 
               <a
                 href="#"
+                aria-label="Instagram"
                 className="w-11 h-11 rounded-full bg-[#1d1d1d] hover:bg-[#4CAF50] duration-300 flex justify-center items-center"
               >
                 <FaInstagram />
@@ -43,6 +47,7 @@ function Footer() {
 
               <a
                 href="#"
+                aria-label="Facebook"
                 className="w-11 h-11 rounded-full bg-[#1d1d1d] hover:bg-[#4CAF50] duration-300 flex justify-center items-center"
               >
                 <FaFacebookF />
@@ -50,6 +55,7 @@ function Footer() {
 
               <a
                 href="#"
+                aria-label="TikTok"
                 className="w-11 h-11 rounded-full bg-[#1d1d1d] hover:bg-[#4CAF50] duration-300 flex justify-center items-center"
               >
                 <FaTiktok />
@@ -57,6 +63,7 @@ function Footer() {
 
               <a
                 href="#"
+                aria-label="YouTube"
                 className="w-11 h-11 rounded-full bg-[#1d1d1d] hover:bg-[#4CAF50] duration-300 flex justify-center items-center"
               >
                 <FaYoutube />
@@ -176,16 +183,22 @@ function Footer() {
 
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg"
+              alt="Visa"
+              loading="lazy"
               className="h-8"
             />
 
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
+              alt="PayPal"
+              loading="lazy"
               className="h-8"
             />
 
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+              alt="Mastercard"
+              loading="lazy"
               className="h-8"
             />
 

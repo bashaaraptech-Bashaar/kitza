@@ -293,6 +293,7 @@ function CartDrawer({ open, onClose }) {
 
           <button
             onClick={onClose}
+            aria-label="Close shopping cart"
             className="w-9 h-9 rounded-full
             flex items-center justify-center
             hover:bg-gray-100 transition"
@@ -388,6 +389,7 @@ function CartDrawer({ open, onClose }) {
                     <img
                       src={productImage}
                       alt={item.name}
+                      loading="lazy"
                       className="w-16 h-20 sm:w-28 sm:h-32
                       object-contain
                       rounded-xl bg-gray-100"
@@ -422,6 +424,7 @@ function CartDrawer({ open, onClose }) {
                             )
                           }
                           disabled={isUpdating}
+                          aria-label={`Remove ${item.name}`}
                           className="text-gray-400
                           hover:text-red-500
                           transition shrink-0
@@ -474,6 +477,7 @@ function CartDrawer({ open, onClose }) {
                             quantity <= 1 ||
                             isUpdating
                           }
+                          aria-label={`Decrease quantity for ${item.name}`}
                           className="w-8 h-8
                           rounded-full border
                           flex items-center
@@ -507,6 +511,7 @@ function CartDrawer({ open, onClose }) {
                             )
                           }
                           disabled={isUpdating}
+                          aria-label={`Increase quantity for ${item.name}`}
                           className="w-8 h-8
                           rounded-full border
                           flex items-center

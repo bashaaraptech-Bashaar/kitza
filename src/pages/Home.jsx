@@ -12,14 +12,16 @@ function Home() {
   return (
     <>
       <Navbar />
-      <Hero />
-      <ClubStrip />
-      <NewArrivals />
-      <TopSelling />
-       <LeagueSection />
+      <main>
+        <Hero />
+        <ClubStrip />
+        <NewArrivals />
+        <TopSelling />
+        <LeagueSection />
         <Review />
-         <Letter/>
-          <Footer />
+        <Letter />
+      </main>
+      <Footer />
 
     </>
   );

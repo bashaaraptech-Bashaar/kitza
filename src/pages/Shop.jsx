@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import Review from "../components/Reviews";
 import ShopSidebar from "../components/ShopSidebar";
 import ProductCard from "../components/ProductCard";
+import { fetchProducts } from "../lib/productsApi";
 
 function Shop() {
   const [products, setProducts] = useState([]);
@@ -12,14 +13,7 @@ function Shop() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-  fetch("https://kitza-backend.vercel.app/products")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
-        }
-
-        return response.json();
-      })
+    fetchProducts()
       .then((data) => {
         setProducts(data);
         setLoading(false);

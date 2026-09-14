@@ -660,6 +660,7 @@ function Checkout() {
             <img
               src={productImage}
               alt={item.name}
+              loading="lazy"
               className="w-20 h-24 object-contain rounded-xl bg-gray-100 shrink-0"
             />
 
@@ -692,6 +693,7 @@ function Checkout() {
                     removeItem(item._id)
                   }
                   disabled={isUpdating}
+                  aria-label={`Remove ${item.name}`}
                   className="text-gray-400 hover:text-red-500 disabled:opacity-40 shrink-0"
                 >
                   <FiTrash2 size={16} />
@@ -722,6 +724,7 @@ function Checkout() {
                     quantity <= 1 ||
                     isUpdating
                   }
+                  aria-label={`Decrease quantity for ${item.name}`}
                   className="w-7 h-7 rounded-full border flex items-center justify-center hover:bg-gray-100 disabled:opacity-40"
                 >
                   <FiMinus size={12} />
@@ -741,6 +744,7 @@ function Checkout() {
                     )
                   }
                   disabled={isUpdating}
+                  aria-label={`Increase quantity for ${item.name}`}
                   className="w-7 h-7 rounded-full border flex items-center justify-center hover:bg-gray-100 disabled:opacity-40"
                 >
                   <FiPlus size={12} />
