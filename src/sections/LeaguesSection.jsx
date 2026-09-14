@@ -1,7 +1,7 @@
-import premier from "../assets/leagues/premier.png";
-import laliga from "../assets/leagues/laliga.png";
-import seriea from "../assets/leagues/seriea.png";
-import international from "../assets/leagues/international.png";
+import premier from "../assets/leagues/premier.webp";
+import laliga from "../assets/leagues/laliga.webp";
+import seriea from "../assets/leagues/seriea.webp";
+import international from "../assets/leagues/international.webp";
 
 const leagues = [
   {
